@@ -137,8 +137,8 @@ cat ~/.bashrc.bak >> ~/.bashrc
 source ~/.bashrc
 
 ### DIRECTORIES
-mkdir $DATA
-mkdir $WEIGHTS
+sudo mkdir $DATA
+sudo mkdir $WEIGHTS
 sudo chmod 755 $DATA
 sudo chmod 755 $WEIGHTS
 
