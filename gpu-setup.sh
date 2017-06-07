@@ -74,8 +74,8 @@ export PS1='\W\[\033[00m\]|\$(parse_git_branch)\[\033[00m\] $ '
 #
 export DATA=/data
 export WEIGHTS=/weights
-cddata(){ cd $DATA/$1; }
-cdweights(){ cd $WEIGHTS/$1; }
+cddata(){ cd ${DATA}/$1; }
+cdweights(){ cd ${WEIGHTS}/$1; }
 
 #
 # CUDA
@@ -216,7 +216,8 @@ pip install 'keras<2'
 # other
 conda install -y libgcc
 pip install bcolz
-
+# deactivate
+source deactivate
 
 
 
