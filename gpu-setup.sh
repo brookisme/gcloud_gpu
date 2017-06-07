@@ -183,9 +183,11 @@ echo ""
 echo "TOOLS..."
 sudo apt-get install -y unzip
 sudo apt-get install -y tree
+sudo apt-get install -y p7zip
 pip install kaggle-cli
 conda install -y libgcc
 pip install bcolz
+
 pip install gitnb
 
 ### REINSTALL NUMPY <sk-image error>
