@@ -68,8 +68,8 @@ alias gc='git commit -am'
 #
 export DATA=/data
 export WEIGHTS=/weights
-cddata(){ cd ${DATA}/$1; }
-cdweights(){ cd ${WEIGHTS}/$1; }
+cddata(){ cd $DATA/$1; }
+cdweights(){ cd $WEIGHTS/$1; }
 
 #
 # CUDA
@@ -133,8 +133,8 @@ source ~/.bashrc
 ### DIRECTORIES
 sudo mkdir $DATA
 sudo mkdir $WEIGHTS
-sudo chmod 755 $DATA
-sudo chmod 755 $WEIGHTS
+sudo chmod 777 $DATA
+sudo chmod 777 $WEIGHTS
 
 ### ML
 conda install -y pytorch torchvision cuda80 -c soumith
