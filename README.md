@@ -10,31 +10,35 @@ _The number of virtual CPUs and the storage have little effect on cost. However 
 	- 2: ~ $1.68 / hour
 	- 4: ~ $3.08 / hour
 
-###### NOTE ON SNAPSHOTS
-If creating from a snapshot you must first  create the disk
 
-```bash
-gcloud compute disks create DISK_NAME --source-snapshot SNAPSHOT_NAME
-```
+---------
+&nbsp;
+&nbsp;
+## CREATE INSTANCE
 
-###### CREATE INSTANCE
+Use the script [create_instance.sh](https://github.com/brookisme/gcloud_gpu/blob/master/create_instance.sh) to create new instances.
+
+USAGE:
 
 ```bash
 . create_instance.sh \
-	<NAME> \
-	<COUNT> \
-	[DISK_SIZE: 200] \
-	[SNAPSHOT_NAME: No snapshot]
+    <NAME> \
+    <COUNT> \
+    [DISK_SIZE: 200] \
+    [SNAPSHOT_NAME: No snapshot]
 ```
+
+VARS:
 
 - NAME: (required) name of instance
 - COUNT: (required) GPUs -1,2,4 | CPUs 0
-- DISK_SIZE: (in GB) defaluts to 200
-- SNAPSHOT_NAME: 
-	- must first create snapshot (see above note)
-	- DISK_SIZE is ignored so pass in anything as a space filler (like "skip" in example below)
+- DISK_SIZE: defaluts to 200 (GB)
+- SNAPSHOT_NAME (_see note below_): 
+    - must first create snapshot (see above note)
+    - DISK_SIZE is ignored so pass in anything as a space filler (like "skip" in example below)
 
-_examples_
+
+EXAMPLES:
 
 ```bash
 # 4 gpu, default disk size (200GB)
@@ -45,9 +49,16 @@ _examples_
 ```
 
 
-###### CPU (from gpu snapshot) 
+ **NOTE ON SNAPSHOTS:** If creating instance from a snapshot you must first  create the disk
 
-**NOTE:** _If the script boots from a GPU disk snapshot after creating the instance you'll then need to remove the gpu dependencies._
+```bash
+gcloud compute disks create DISK_NAME --source-snapshot SNAPSHOT_NAME
+```
+
+
+####### CPU (from gpu snapshot) 
+
+If you are creating a CPU from a GPU snapshot you'll need to remove the GPU dependencies.
 
 ```bash
 # remove cuda
@@ -74,7 +85,7 @@ device = cpu
 ```
 
 
-
+---------
 &nbsp;
 &nbsp;
 ## SETUP SCRIPT
@@ -95,6 +106,9 @@ gcloud compute copy-files gpu-setup.sh gpu-84:~/
 ```
 
 
+---------
+&nbsp;
+&nbsp;
 ## INSTANCE SETUP 
 
 ###### CUDNN
@@ -132,7 +146,8 @@ popd
 	- (protocols and ports) tcp:8800-8900
 
 
-#### POSSIBLE CHANGES:
+###### OTHER POSSIBLE CHANGES:
+
 - do not delete disk when deleted
 
 ###### JUPYTER 
@@ -159,12 +174,14 @@ jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser &
 jnb
 ```
 
-###### GIT (password only every 12 hours)`
+###### GIT (password only every 12 hours)
+
 ```
 git config --global credential.helper 'cache --timeout=43200'
 ```
 
 ###### [TMUX-SETUP](https://github.com/brookisme/tmux-setup)
+
 ```
 pushd ~/
 rm -rf .tmux*
@@ -181,7 +198,6 @@ popd
 # check TF install
 python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))"
 ```
-
 
 ###### PY2 CHECKS
 ```
