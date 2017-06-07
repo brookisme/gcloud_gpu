@@ -56,7 +56,7 @@ gcloud compute disks create DISK_NAME --source-snapshot SNAPSHOT_NAME
 ```
 
 
-####### CPU (from gpu snapshot) 
+###### CPU (from gpu snapshot) 
 
 If you are creating a CPU from a GPU snapshot you'll need to remove the GPU dependencies.
 
