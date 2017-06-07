@@ -182,6 +182,13 @@ git config --global credential.helper 'cache --timeout=43200'
 
 ###### [TMUX-SETUP](https://github.com/brookisme/tmux-setup)
 
+This setup:
+
+- changes the control key from `C-b` to `C-a`
+- installs a print package for logging
+- uses `|` and `-` to split screens
+- a couple other things
+
 ```
 pushd ~/
 rm -rf .tmux*
@@ -244,3 +251,42 @@ python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))
     "ssh_key_file": "~/.ssh/google_compute_engine"
 }
 ```
+
+---------
+&nbsp;
+&nbsp;
+## THE SETUP: ALIASES, DIRECTORIES, PROMPTS 
+
+In addition to setting up CUDNN and installing packages the script added a handful of commands, alaises and other things which I'll mention here.
+
+##### DATA/WEIGHTS
+
+There are directories in the root directory DATA and WEIGHTS which in which I claim all data and weights should go.
+
+- its in root, instead of user root, in case other users are also using this instance and logging into a different user root but want access to the same data and weights
+- its not in a project directory because you might want to use the same set of data/weights in more than one project, or have different version of projects and you certainly don't want to be copying or moving data around
+- its easy to access
+    + I've set up bash alaises `cddata` and `cdweights` so its easy to get there from the command line
+    + I've exported the environment vars `DATA` and `WEIGHTS` so that python scripts can access it `os.environ.get('DATA')`.
+
+##### ALAISES/ENV
+
+- `jnb` launches a python notebook
+- the python-2 environment is called py2 (`source activate py2`)
+- `source activate` is aliased by `sa`
+- `source deactivate` is aliased by `sd`
+- `kerastf`,`kerasth` switch the keras backend to tensorflow,theano respectively
+
+```bash
+# example: go to py2
+$ sa py2
+$ kerasth
+
+# return to default py3
+$ sd
+$ kerastf
+
+# 
+```
+
+ 
