@@ -183,7 +183,7 @@ echo ""
 echo "TOOLS..."
 sudo apt-get install -y unzip
 sudo apt-get install -y tree
-sudo apt-get install -y p7zip
+sudo apt-get install -y p7zip-full
 pip install kaggle-cli
 conda install -y libgcc
 pip install bcolz
