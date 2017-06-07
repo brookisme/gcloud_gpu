@@ -62,21 +62,20 @@ alias gpo='git push origin'
 alias gs='git status'
 alias gc='git commit -am'
 
-
 #
 # ML DIRS
 #
 export DATA=/data
 export WEIGHTS=/weights
-cddata(){ cd $DATA/$1; }
-cdweights(){ cd $WEIGHTS/$1; }
+cddata(){ cd \${DATA}/$1; }
+cdweights(){ cd \${WEIGHTS}/$1; }
 
 #
 # CUDA
 #
 export CUDA_HOME=/usr/local/cuda-8.0 
-export LD_LIBRARY_PATH=${CUDA_HOME}/lib64
-PATH=${CUDA_HOME}/bin:${PATH} 
+export LD_LIBRARY_PATH=\${CUDA_HOME}/lib64
+PATH=\${CUDA_HOME}/bin:\${PATH} 
 export PATH
 
 #
