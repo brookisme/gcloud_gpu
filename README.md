@@ -13,7 +13,6 @@ _The number of virtual CPUs and the storage have little effect on cost. However 
 
 ---------
 &nbsp;
-&nbsp;
 ## CREATE INSTANCE
 
 Use the script [create_instance.sh](https://github.com/brookisme/gcloud_gpu/blob/master/create_instance.sh) to create new instances.
@@ -87,7 +86,6 @@ device = cpu
 
 ---------
 &nbsp;
-&nbsp;
 ## SETUP SCRIPT
 
 ##### copy files to instance
@@ -107,7 +105,6 @@ gcloud compute copy-files gpu-setup.sh gpu-84:~/
 
 
 ---------
-&nbsp;
 &nbsp;
 ## INSTANCE SETUP 
 
@@ -236,8 +233,8 @@ PROMPT_COMMAND='PS1="${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_
 This setup:
 
 - changes the control key from `C-b` to `C-a`
-- installs a print package for logging
 - uses `|` and `-` to split screens
+- installs a print package for logging
 - a couple other things
 
 ```
@@ -305,7 +302,6 @@ python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))
 
 ---------
 &nbsp;
-&nbsp;
 ## THE SETUP: ALIASES, DIRECTORIES, PROMPTS 
 
 In addition to setting up CUDNN and installing packages the script added a handful of commands, alaises and other things which I'll mention here.
@@ -314,8 +310,8 @@ In addition to setting up CUDNN and installing packages the script added a handf
 
 There are directories in the root directory DATA and WEIGHTS which in which I claim all data and weights should go.
 
-- its in root, instead of user root, in case other users are also using this instance and logging into a different user root but want access to the same data and weights
 - its not in a project directory because you might want to use the same set of data/weights in more than one project, or have different version of projects and you certainly don't want to be copying or moving data around
+- its in root, instead of user root, in case other users are also using this instance and logging into a different user root but want access to the same data and weights
 - its easy to access
     + I've set up bash alaises `cddata` and `cdweights` so its easy to get there from the command line
     + I've exported the environment vars `DATA` and `WEIGHTS` so that python scripts can access it `os.environ.get('DATA')`.
@@ -336,6 +332,23 @@ $ kerasth
 # return to default py3
 $ sd
 $ kerastf
+```
+
+### LOCAL GCLOUD ALAISES
+
+I like to add the following to my .bash(rc)(\_profile). 
+
+Note: `ggo` doesn't always work. The pause is in there because sometimes I get a 255 error, and I _think_ this is because the server isn't ready even though `gstart` has completed. Still playing with this.
+
+```bash
+#
+# GCLOUD
+#
+alias gconfig='gcloud config configurations activate'
+alias gssh='gcloud compute ssh'
+alias gstart='gcloud compute instances start'
+alias gstop='gcloud compute instances stop'
+ggo(){ echo 'gcloud start: '$1; gstart $1; echo '...pausing for server'; sleep 15; echo 'gcloud ssh: '$1;  gssh $1 ; }
 ```
 
  
