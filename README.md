@@ -336,8 +336,6 @@ $ kerasth
 # return to default py3
 $ sd
 $ kerastf
-
-# 
 ```
 
  
