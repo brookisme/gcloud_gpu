@@ -112,9 +112,11 @@ gcloud compute copy-files gpu-setup.sh gpu-84:~/
 
 After signing up you can download cudnn from here [https://developer.nvidia.com/rdp/cudnn-download](https://developer.nvidia.com/rdp/cudnn-download). I've saved a version to cloud-storage, which makes copying to a compute instance lightning fast.
 
+**Tensorflow does not yet work with cudnn-v6, use v5 for now**
+
 ```bash
-# download cudnn
-wget https://storage.googleapis.com/bgw-public/cudnn/8.0/cudnn-8.0-linux-x64-v6.0.tgz
+# download cudnn v5.1
+wget https://storage.googleapis.com/bgw-public/cudnn/8.0/cudnn-8.0-linux-x64-v5.1.tgz
 
 # unpack
 tar zxvf cudnn-8.0-linux-x64-v6.0.tgz 
