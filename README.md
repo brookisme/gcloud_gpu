@@ -119,7 +119,7 @@ After signing up you can download cudnn from here [https://developer.nvidia.com/
 wget https://storage.googleapis.com/bgw-public/cudnn/8.0/cudnn-8.0-linux-x64-v5.1.tgz
 
 # unpack
-tar zxvf cudnn-8.0-linux-x64-v6.0.tgz 
+tar zxvf cudnn-8.0-linux-x64-v5.1.tgz 
 
 # move cuda to usr/local
 sudo mv cuda/lib64/* /usr/local/cuda/lib64/
