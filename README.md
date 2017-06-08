@@ -290,7 +290,7 @@ python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))
         "sftp-settings\\.json", "/venv/", 
         "\\.svn", 
         "\\.hg", 
-        "\\.git", 
+        "\\.git/", 
         "\\.bzr", 
         "_darcs", 
         "CVS", 
