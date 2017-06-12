@@ -53,7 +53,7 @@ echo "
 #
 alias vibash='vi ~/.bashrc'
 alias sourcebash='. ~/.bashrc'
-lsports(){ sudo lsof -n -i | grep $1 | grep LISTEN ; }
+lsports(){ sudo lsof -n -i | grep \$1 | grep LISTEN ; }
 
 #
 # GIT
