@@ -273,7 +273,10 @@ python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))
 *NOTE: If you don't reserve a static-ip you are going to have to update the ip-address each time.  With new ip's first log in through gcloud cli to accept private key.*
 
 ```json
-# example sftp-config.json
+// example sftp-config.json
+// pro-tip: 
+//    if you are using on multiple instances put the name 
+//    of the instance in a comment and use the sublremote cmd
 {
     "type": "sftp",
     "sync_down_on_open": false,
@@ -300,6 +303,45 @@ python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))
     "connect_timeout": 30,
     "ssh_key_file": "~/.ssh/google_compute_engine"
 }
+```
+
+I often use multiple machines. A cpu for dev and gpu for training.  In that case i'll create multiple configs, for instance
+```
+cpu.sftp-config.json
+gpu.sftp-config.json
+```
+
+And add this cmd to my bash profile
+
+```bash
+function sublremote {
+    if [[ "$1" = "off"  ]]
+    then
+        echo "SUBL-REMOTE: OFF"
+        if [[ -f sftp-config.json  ]]
+        then
+           mv sftp-config.json sftp-config.json.bak
+        fi
+        elif [[  -f $1.sftp-config.json ]]
+    then
+        if [[ -f sftp-config.json  ]]
+        then
+           mv sftp-config.json sftp-config.json.bak
+        fi
+        echo "SUBL-REMOTE: CONNECT < $1 >"
+        cp $1.sftp-config.json sftp-config.json
+        else
+        echo "SUBL-REMOTE: ERROR < config <sftp-config.json.$1> does not exist >"
+        fi
+}
+```
+
+I can now switch syncing and turn off syncing like so...
+
+```bash
+$ sublremote cpu
+$ sublremote gpu
+$ sublremote off
 ```
 
 ---------
