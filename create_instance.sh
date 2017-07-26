@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 TEST_RUN=FALSE
 NAME=$1
 COUNT=$2
@@ -25,8 +25,7 @@ then
         --machine-type n1-standard-8 --zone us-east1-d
         --accelerator type=nvidia-tesla-k80,count=${COUNT}
         --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud
-        --maintenance-policy TERMINATE --restart-on-failure
-        --boot-disk-size ${STORAGE}GB"
+        --maintenance-policy TERMINATE --restart-on-failure"
 else
     echo 'CREATE CPU: '$1' ( '$3' | '$SNAPSHOT' )'
     cmd="gcloud compute instances create ${NAME}

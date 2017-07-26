@@ -190,7 +190,9 @@ I couldn't get this work in the gpu-setup so you'll have to add it to your .bash
     + red if edits exist
 
 ```bash
-# Taken from http://vvv.tobiassjosten.net/bash/dynamic-prompt-with-git-and-ansi-colors/ (with minor edits) 
+# based on http://vvv.tobiassjosten.net/bash/dynamic-prompt-with-git-and-ansi-colors/
+# - conda env added
+# - colors changed
 
 # Configure colors, if available.
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -225,8 +227,17 @@ git_prompt ()
   echo "[$git_color$git_branch${c_reset}]"
 }
 
+
+# Function to get conda env.
+conda_env ()
+{ 
+    regex='$\(([^)]+)\)'
+    [[ $PS1 =~ $regex ]]
+    echo "$BASH_REMATCH"
+}
+
 # Thy holy prompt.
-PROMPT_COMMAND='PS1="${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}$(git_prompt)\$ "'
+PROMPT_COMMAND='PS1="$(conda_env)${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}$(git_prompt)\$ "'
 ```
 
 
