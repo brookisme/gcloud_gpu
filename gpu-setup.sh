@@ -100,7 +100,7 @@ mvnt(){ matchdir=`pwd`/$2; todir=`pwd`/$3; find $matchdir -type f | grep -v samp
 # anaconda
 alias sd='source deactivate'
 alias sa='source activate'
-alias jnb='jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser &'
+alias jnb='jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser'
 
 # keras
 kerastf() {
