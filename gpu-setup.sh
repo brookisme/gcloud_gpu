@@ -4,8 +4,7 @@
 # DOWNLOAD VERSIONS
 #
 CUDA_VERSION=cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
-# ANACONDA_VERSION=Anaconda3-4.4.0-Linux-x86_64.sh
-ANACONDA_VERSION=Anaconda3-4.4.0.1-Linux-ppc64le.sh
+ANACONDA_VERSION=Anaconda3-4.4.0-Linux-x86_64.sh
 TENSORFLOW_VERSION=tensorflow_gpu-1.3.0-cp36-cp36m-linux_x86_64.whl
 TENSORFLOW_VERSION_PY2=tensorflow_gpu-1.3.0-cp27-none-linux_x86_64.whl
 
