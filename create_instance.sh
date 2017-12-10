@@ -14,6 +14,7 @@ else
     SNAPSHOT_DISK_NAME='--disk name='$SNAPSHOT',boot=yes'
     BOOT_DISK_SIZE=''
 fi
+
 echo ''
 echo ''
 if [ $COUNT -ne 0 ]
@@ -22,7 +23,7 @@ then
     cmd="gcloud beta compute instances create ${NAME}
         ${SNAPSHOT_DISK_NAME}
         ${BOOT_DISK_SIZE}
-        --machine-type n1-standard-8 --zone us-east1-d
+        --machine-type n1-standard-8
         --accelerator type=nvidia-tesla-k80,count=${COUNT}
         --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud
         --maintenance-policy TERMINATE --restart-on-failure"
@@ -31,7 +32,7 @@ else
     cmd="gcloud compute instances create ${NAME}
         ${SNAPSHOT_DISK_NAME}
         ${BOOT_DISK_SIZE}
-        --machine-type n1-standard-8 --zone us-east1-d
+        --machine-type n1-standard-8
         --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud
         --maintenance-policy TERMINATE --restart-on-failure"
 fi
