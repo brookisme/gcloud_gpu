@@ -23,7 +23,7 @@ USAGE:
 . create_instance.sh \
     <NAME> \
     <COUNT> \
-    [DISK_SIZE: 200] \
+    [DISK_SIZE: 20] \
     [SNAPSHOT_NAME: No snapshot]
 ```
 
@@ -31,7 +31,10 @@ VARS:
 
 - NAME: (required) name of instance
 - COUNT: (required) GPUs -1,2,4 | CPUs 0
-- DISK_SIZE: defaluts to 200 (GB)
+- DISK_SIZE: 
+    - defaluts to 20 (GB)
+    - instead of increasing consider [adding a persistent disk](#pdisk)
+    
 - SNAPSHOT_NAME (_see note below_): 
     - must first create snapshot (see above note)
     - DISK_SIZE is ignored so pass in anything as a space filler (like "skip" in example below)
@@ -52,6 +55,30 @@ EXAMPLES:
 
 ```bash
 gcloud compute disks create DISK_NAME --source-snapshot SNAPSHOT_NAME
+```
+
+###### ADD PERSISTENT DISK
+<a name='pdisk'></a>
+https://cloud.google.com/compute/docs/disks/add-persistent-disk
+
+```bash
+# create/attach disk
+gcloud compute disks create <DISK_NAME> --size 200--type pd-standard
+gcloud compute instances attach-disk <INSTANCE_NAME> --disk <DISK_NAME>
+
+#
+# format/mount disk (ssh to instance)
+#
+
+# get DISK_ID (~sdb)
+sudo lsblk 
+
+# format disk
+sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/<DISK_ID>
+
+# mount disk at "/data"
+sudo mkdir /data
+sudo mount -o discard,defaults /dev/<DISK_ID> /data
 ```
 
 

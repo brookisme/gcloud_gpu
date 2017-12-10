@@ -4,7 +4,7 @@ NAME=$1
 COUNT=$2
 if [ -z $4 ]
 then
-    STORAGE=${3:-200}
+    STORAGE=${3:-20}
     SNAPSHOT='--'
     SNAPSHOT_DISK_NAME=''
     BOOT_DISK_SIZE='--boot-disk-size '$STORAGE'GB'
