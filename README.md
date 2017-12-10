@@ -100,7 +100,11 @@ gcloud compute copy-files gpu-setup.sh gpu-84:~/
 **NOTE:** The Anaconda install is interactive. The default for add anaconda to PATH is no -- **type yes!!!**
 
 ```bash
+# GPU
 . gpu-setup.sh
+
+# CPU
+. gpu-setup.sh CPU
 ```
 
 

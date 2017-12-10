@@ -1,34 +1,39 @@
 #!/bin/bash
 
+
 #
 # DOWNLOAD VERSIONS
 #
-CUDA_VERSION=cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
-ANACONDA_VERSION=Anaconda3-4.4.0-Linux-x86_64.sh
-TENSORFLOW_VERSION=tensorflow_gpu-1.3.0-cp36-cp36m-linux_x86_64.whl
-TENSORFLOW_VERSION_PY2=tensorflow_gpu-1.3.0-cp27-none-linux_x86_64.whl
-
-
-#
-# DOWNLOAD BASE
-#
-CUDA_DOWNLOAD_BASE=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64
+ANACONDA_VERSION=Anaconda3-5.0.1-Linux-x86_64.sh
 ANACONDA_DOWNLOAD_BASE=https://repo.continuum.io/archive
-TENSORFLOW_BASE=https://storage.googleapis.com/tensorflow/linux/gpu
-
-
 
 cd ~/
 
-### CUDA
-echo ''
-echo ''
-echo "Checking for CUDA and installing."
-if ! dpkg-query -W cuda; then
-  curl -O $CUDA_DOWNLOAD_BASE'/'$CUDA_VERSION
-  sudo dpkg -i ./$CUDA_VERSION
-  sudo apt-get update
-  sudo apt-get install -y cuda 
+#
+# TENSORFLOW DOWNLOAD
+#
+if [ "$1" = "CPU" ]; then
+    echo "CPU SETUP:"
+    TENSORFLOW_BASE=https://storage.googleapis.com/tensorflow/linux/cpu/
+    TENSORFLOW_VERSION=tensorflow-1.4.0-cp36-cp36m-linux_x86_64.whl
+    TENSORFLOW_VERSION_PY2=tensorflow-1.4.0-cp27-none-linux_x86_64.whl
+else
+    echo "GPU SETUP:"
+    CUDA_DOWNLOAD_BASE=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64
+    CUDA_VERSION=cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+    TENSORFLOW_BASE=https://storage.googleapis.com/tensorflow/linux/gpu
+    TENSORFLOW_VERSION=tensorflow_gpu-1.4.0-cp36-cp36m-linux_x86_64.whl
+    TENSORFLOW_VERSION_PY2=tensorflow_gpu-1.4.0-cp27-none-linux_x86_64.whl
+    ### CUDA
+    echo ''
+    echo ''
+    echo "Checking for CUDA and installing."
+    if ! dpkg-query -W cuda; then
+      curl -O $CUDA_DOWNLOAD_BASE'/'$CUDA_VERSION
+      sudo dpkg -i ./$CUDA_VERSION
+      sudo apt-get update
+      sudo apt-get install -y cuda 
+    fi
 fi
 
 
