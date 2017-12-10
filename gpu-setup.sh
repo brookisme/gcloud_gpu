@@ -14,7 +14,7 @@ cd ~/
 #
 if [ "$1" = "CPU" ]; then
     echo "CPU SETUP:"
-    TENSORFLOW_BASE=https://storage.googleapis.com/tensorflow/linux/cpu/
+    TENSORFLOW_BASE=https://storage.googleapis.com/tensorflow/linux/cpu
     TENSORFLOW_VERSION=tensorflow-1.4.0-cp36-cp36m-linux_x86_64.whl
     TENSORFLOW_VERSION_PY2=tensorflow-1.4.0-cp27-none-linux_x86_64.whl
 else
@@ -211,8 +211,10 @@ source activate py2
 # tensorflow
 TF=$TENSORFLOW_BASE/$TENSORFLOW_VERSION_PY2
 pip install --ignore-installed --upgrade $TF
-# keras 1 ( to be consistent with fastai-part-1 notebooks )
-pip install 'keras<2' 
+# use keras 1 if you want to be consistent with fastai-part-1 notebooks
+# pip install 'keras<2' 
+pip install keras
+
 # other
 conda install -y libgcc
 pip install bcolz
