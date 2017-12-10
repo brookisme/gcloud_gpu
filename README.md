@@ -63,7 +63,7 @@ https://cloud.google.com/compute/docs/disks/add-persistent-disk
 
 ```bash
 # create/attach disk
-gcloud compute disks create <DISK_NAME> --size 200--type pd-standard
+gcloud compute disks create <DISK_NAME> --size 200 --type pd-standard
 gcloud compute instances attach-disk <INSTANCE_NAME> --disk <DISK_NAME>
 
 #
