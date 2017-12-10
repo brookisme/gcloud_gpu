@@ -1,4 +1,4 @@
-    #!/bin/bash
+#!/bin/bash
 TEST_RUN=FALSE
 NAME=$1
 COUNT=$2
@@ -34,7 +34,6 @@ else
         --machine-type n1-standard-8 --zone us-east1-d
         --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud
         --maintenance-policy TERMINATE --restart-on-failure"
-    ${cmd}    
 fi
 if [ "$TEST_RUN" = "TRUE" ]
 then
