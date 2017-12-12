@@ -126,12 +126,20 @@ gcloud compute copy-files gpu-setup.sh gpu-84:~/
 
 **NOTE:** The Anaconda install is interactive. The default for add anaconda to PATH is no -- **type yes!!!**
 
+You can choose to install with TensorFlow or, if you are going to [install from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes), skip the tensorflow installs
+
 ```bash
-# GPU
+# GPU (with TF)
 . gpu-setup.sh
 
-# CPU
-. gpu-setup.sh CPU
+# GPU (without TF)
+. gpu-setup.sh gpu skip-tf
+
+# CPU (with TF)
+. gpu-setup.sh cpu
+
+# CPU (without TF)
+. gpu-setup.sh cpu skip-tf
 ```
 
 
@@ -291,9 +299,11 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 popd
 ```
 
-###### CHECK TENSORFLOW SETUP
+###### PY3 CHECKS
 
 ```bash
+python --version
+python -c "from osgeo import gdal; print(gdal.__version__)"
 # check TF install
 python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))"
 ```
@@ -301,14 +311,9 @@ python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))
 ###### PY2 CHECKS
 ```
 sa py2
-python -c "print 'i am python 2'"
+python --version
 python -c "import keras; print(keras.__version__)"
 python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))"
-```
-
-###### GDAL
-```bash
-...
 ```
 
 ###### SUBLIME

@@ -12,7 +12,7 @@ cd ~/
 #
 # TENSORFLOW DOWNLOAD
 #
-if [ "$1" = "CPU" ]; then
+if [ "$1" = "cpu" ]; then
     echo "CPU SETUP:"
     TENSORFLOW_BASE=https://storage.googleapis.com/tensorflow/linux/cpu
     TENSORFLOW_VERSION=tensorflow-1.4.0-cp36-cp36m-linux_x86_64.whl
@@ -161,9 +161,14 @@ root = /usr/local/cuda-8.0
 ### Tensorflow
 echo ''
 echo ''
-echo "TensorFlow Install:"
-TF=$TENSORFLOW_BASE/$TENSORFLOW_VERSION
-pip install --ignore-installed --upgrade $TF
+if [ "$2" != "skip-tf" ]; then
+    echo "TensorFlow Install:"
+    TF=$TENSORFLOW_BASE/$TENSORFLOW_VERSION
+    pip install --ignore-installed --upgrade $TF
+else
+    echo "Tensorflow not installed: Install from source:"
+    echo "https://www.tensorflow.org/install/install_sources"
+fi
 
 ### KERAS
 pip install keras
@@ -216,9 +221,18 @@ echo ""
 echo "PYTHON-2 SETUP"
 conda create -y -n py2 python=2 anaconda
 source activate py2
-# tensorflow
-TF=$TENSORFLOW_BASE/$TENSORFLOW_VERSION_PY2
-pip install --ignore-installed --upgrade $TF
+### Tensorflow
+echo ''
+echo ''
+if [ "$2" != "skip-tf" ]; then
+    echo "TensorFlow Install:"
+    TF=$TENSORFLOW_BASE/$TENSORFLOW_VERSION_PY2
+    pip install --ignore-installed --upgrade $TF
+else
+    echo "Tensorflow not installed: Install from source:"
+    echo "https://www.tensorflow.org/install/install_sources"
+fi
+
 # use keras 1 if you want to be consistent with fastai-part-1 notebooks
 # pip install 'keras<2' 
 pip install keras
