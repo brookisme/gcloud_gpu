@@ -302,7 +302,7 @@ python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))
 ```
 sa py2
 python -c "print 'i am python 2'"
-python -c "import keras; print(keras.__version__,'< 2.0')"
+python -c "import keras; print(keras.__version__)"
 python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))"
 ```
 

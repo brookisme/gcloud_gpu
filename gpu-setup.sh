@@ -39,6 +39,7 @@ fi
 
 ### install pip
 sudo apt-get install -y python-pip
+pip install --upgrade pip
 
 ### Anaconda
 echo ''
@@ -134,11 +135,18 @@ kerastfth() {
 cat ~/.bashrc.bak >> ~/.bashrc 
 source ~/.bashrc
 
+
 ### DIRECTORIES
 sudo mkdir $DATA
 sudo mkdir $WEIGHTS
 sudo chmod 777 $DATA
 sudo chmod 777 $WEIGHTS
+
+
+### GDAL
+sudo apt-get install libgdal-dev gdal-bin 
+conda install -y gdal
+
 
 ### ML
 conda install -y pytorch torchvision cuda80 -c soumith
