@@ -182,6 +182,8 @@ popd
 ): 
 	- (source ip-ranges) 0.0.0.0/0
 	- (protocols and ports) tcp:8800-8900
+  - add target ~ "jupyter" 
+- add target to compute engine instance [GCloud-Console > Compute Engine](https://console.cloud.google.com/compute/instances) > edit
 
 
 ###### OTHER POSSIBLE CHANGES:
