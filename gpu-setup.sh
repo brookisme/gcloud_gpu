@@ -20,7 +20,7 @@ if [ "$1" = "cpu" ]; then
 else
     echo "GPU SETUP:"
     CUDA_DOWNLOAD_BASE=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64
-    CUDA_VERSION=cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+    CUDA_VERSION=cuda-repo-ubuntu1604_9.1.85-1_amd64.deb
     TENSORFLOW_BASE=https://storage.googleapis.com/tensorflow/linux/gpu
     TENSORFLOW_VERSION=tensorflow_gpu-1.4.0-cp36-cp36m-linux_x86_64.whl
     TENSORFLOW_VERSION_PY2=tensorflow_gpu-1.4.0-cp27-none-linux_x86_64.whl
@@ -28,6 +28,8 @@ else
     echo ''
     echo ''
     echo "Checking for CUDA and installing."
+    # QUESTION: does the .pub file always have the same name?
+    sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
     if ! dpkg-query -W cuda; then
       curl -O $CUDA_DOWNLOAD_BASE'/'$CUDA_VERSION
       sudo dpkg -i ./$CUDA_VERSION
@@ -80,7 +82,7 @@ cdweights(){ cd \${WEIGHTS}/$1; }
 #
 # CUDA
 #
-export CUDA_HOME=/usr/local/cuda-8.0 
+export CUDA_HOME=/usr/local/cuda-9.1 
 export LD_LIBRARY_PATH=\${CUDA_HOME}/lib64
 PATH=\${CUDA_HOME}/bin:\${PATH} 
 export PATH

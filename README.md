@@ -118,7 +118,7 @@ device = cpu
 ##### copy files to instance
 
 ```bash
-gcloud compute copy-files gpu-setup.sh gpu-84:~/
+gcloud compute copy-files gpu-setup.sh <INSTANCE_NAME>:~/
 ```
 
 
@@ -153,15 +153,16 @@ After signing up you can download cudnn from here [https://developer.nvidia.com/
 
 
 ```bash
-# download cudnn v5.1
+# download cudnn v7
 wget https://storage.googleapis.com/bgw-public/cudnn/9.1/cudnn-9.1-linux-x64-v7.tgz
 
 # unpack
 tar zxvf cudnn-9.1-linux-x64-v7.tgz 
 
 # move cuda to usr/local
-sudo mv cuda/lib64/* /usr/local/cuda/lib64/
-sudo mv cuda/include/* /usr/local/cuda/include/
+# QUESTION: SHOULD I REALLY PUT THESE IN 9.1?
+sudo mv cuda/lib64/* /usr/local/cuda-9.1/lib64/
+sudo mv cuda/include/* /usr/local/cuda-9.1/include/
 
 # install samples
 cuda-install-samples-9.1.sh  ~ 
