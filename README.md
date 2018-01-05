@@ -221,7 +221,7 @@ git config --global credential.helper 'cache --timeout=43200'
 ```
 
 
-###### DESCARTESLABS
+###### OTHER
 ```
 # consider installing descarteslabs
 pip install descarteslabs
@@ -231,6 +231,11 @@ pip install -U git+https://github.com/descarteslabs/descarteslabs-python.git
 
 # authorize
 descarteslabs auth login
+
+# other
+conda install shapely
+conda install cartopy
+conda install fiona
 ```
 
 

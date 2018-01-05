@@ -76,8 +76,8 @@ alias gc='git commit -am'
 #
 export DATA=/data
 export WEIGHTS=/weights
-cddata(){ cd \${DATA}/$1; }
-cdweights(){ cd \${WEIGHTS}/$1; }
+cddata(){ cd \${DATA}/\$1; }
+cdweights(){ cd \${WEIGHTS}/\$1; }
 
 #
 # CUDA
