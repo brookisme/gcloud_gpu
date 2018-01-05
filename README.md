@@ -151,24 +151,23 @@ You can choose to install with TensorFlow or, if you are going to [install from 
 
 After signing up you can download cudnn from here [https://developer.nvidia.com/rdp/cudnn-download](https://developer.nvidia.com/rdp/cudnn-download). I've saved a version to cloud-storage, which makes copying to a compute instance lightning fast.
 
-**Tensorflow does not yet work with cudnn-v6, use v5 for now**
 
 ```bash
 # download cudnn v5.1
-wget https://storage.googleapis.com/bgw-public/cudnn/8.0/cudnn-8.0-linux-x64-v5.1.tgz
+wget https://storage.googleapis.com/bgw-public/cudnn/9.1/cudnn-9.1-linux-x64-v7.tgz
 
 # unpack
-tar zxvf cudnn-8.0-linux-x64-v5.1.tgz 
+tar zxvf cudnn-9.1-linux-x64-v7.tgz 
 
 # move cuda to usr/local
 sudo mv cuda/lib64/* /usr/local/cuda/lib64/
 sudo mv cuda/include/* /usr/local/cuda/include/
 
 # install samples
-cuda-install-samples-8.0.sh  ~ 
+cuda-install-samples-9.1.sh  ~ 
 
 # check cuda install
-pushd NVIDIA_CUDA-8.0_Samples/1_Utilities/deviceQuery
+pushd NVIDIA_CUDA-9.1_Samples/1_Utilities/deviceQuery
 make
 ./deviceQuery 
 popd
@@ -219,6 +218,20 @@ jnb
 ```
 git config --global credential.helper 'cache --timeout=43200'
 ```
+
+
+###### DESCARTESLABS
+```
+# consider installing descarteslabs
+pip install descarteslabs
+
+# or latest dev version
+pip install -U git+https://github.com/descarteslabs/descarteslabs-python.git
+
+# authorize
+descarteslabs auth login
+```
+
 
 ###### GIT PRETTY PROMPT
 
