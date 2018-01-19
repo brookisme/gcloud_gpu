@@ -149,6 +149,11 @@ You can choose to install with TensorFlow or, if you are going to [install from 
 
 ###### CUDNN
 
+First check that CUDA is installed correctly:
+```
+nvidia-smi
+```
+
 After signing up you can download cudnn from here [https://developer.nvidia.com/rdp/cudnn-download](https://developer.nvidia.com/rdp/cudnn-download). I've saved a version to cloud-storage, which makes copying to a compute instance lightning fast.
 
 
@@ -221,21 +226,21 @@ git config --global credential.helper 'cache --timeout=43200'
 ```
 
 
-###### OTHER
+###### GEOTOOLS
 ```
-# consider installing descarteslabs
+# descarteslabs
 pip install descarteslabs
-
-# or latest dev version
+# - or latest dev version
 pip install -U git+https://github.com/descarteslabs/descarteslabs-python.git
-
 # authorize
 descarteslabs auth login
 
 # other
-conda install shapely
-conda install cartopy
-conda install fiona
+conda install -y shapely
+conda install -y cartopy
+conda install -y fiona
+conda install -y rasterio
+conda install -y -c conda-forge geopandas
 ```
 
 
