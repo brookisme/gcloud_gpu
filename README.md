@@ -118,7 +118,7 @@ device = cpu
 ##### copy files to instance
 
 ```bash
-gcloud compute copy-files gpu-setup.sh <INSTANCE_NAME>:~/
+gcloud compute scp gpu-setup.sh <INSTANCE_NAME>:~/
 ```
 
 
