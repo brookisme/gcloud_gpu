@@ -228,7 +228,7 @@ git config --global credential.helper 'cache --timeout=43200'
 
 ###### GEOTOOLS
 ```
-# descarteslabs
+# descarteslabs (i had to use sudo -- note this is bad practice)
 pip install descarteslabs
 # - or latest dev version
 pip install -U git+https://github.com/descarteslabs/descarteslabs-python.git

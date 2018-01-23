@@ -2,6 +2,8 @@
 TEST_RUN=FALSE
 NAME=$1
 COUNT=$2
+IMAGE_FAMILY=ubuntu-1604-lts
+
 if [ -z $4 ]
 then
     STORAGE=${3:-20}
@@ -25,7 +27,7 @@ then
         ${BOOT_DISK_SIZE}
         --machine-type n1-standard-8
         --accelerator type=nvidia-tesla-k80,count=${COUNT}
-        --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud
+        --image-family ${IMAGE_FAMILY} --image-project ubuntu-os-cloud
         --maintenance-policy TERMINATE --restart-on-failure"
 else
     echo 'CREATE CPU: '$1' ( '$3' | '$SNAPSHOT' )'
@@ -33,7 +35,7 @@ else
         ${SNAPSHOT_DISK_NAME}
         ${BOOT_DISK_SIZE}
         --machine-type n1-standard-8
-        --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud
+        --image-family ${IMAGE_FAMILY} --image-project ubuntu-os-cloud
         --maintenance-policy TERMINATE --restart-on-failure"
 fi
 if [ "$TEST_RUN" = "TRUE" ]
