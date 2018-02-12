@@ -388,24 +388,29 @@ And add this cmd to my bash profile
 
 ```bash
 function sublremote {
-    if [[ "$1" = "off"  ]]
+  if [[ "$1" = "off"  ]]
     then
         echo "SUBL-REMOTE: OFF"
         if [[ -f sftp-config.json  ]]
         then
-           mv sftp-config.json sftp-config.json.bak
+         mv sftp-config.json sftp-config.json.bak
         fi
-        elif [[  -f $1.sftp-config.json ]]
+    elif [[ "$1" = "open" ]]; then
+        ip=$( cat sftp-config.json | grep host | xargs sh -c 'echo ${1%,}' )
+        url="http://"$ip":8888"
+        echo "SUBL-REMOTE: OPENING URL ( "$url" )"
+        python -m webbrowser -t $url
+  elif [[  -f $1.sftp-config.json ]]
     then
         if [[ -f sftp-config.json  ]]
         then
            mv sftp-config.json sftp-config.json.bak
-        fi
+        fi      
         echo "SUBL-REMOTE: CONNECT < $1 >"
-        cp $1.sftp-config.json sftp-config.json
-        else
-        echo "SUBL-REMOTE: ERROR < config <sftp-config.json.$1> does not exist >"
-        fi
+      cp $1.sftp-config.json sftp-config.json
+  else
+      echo "SUBL-REMOTE: ERROR < config <sftp-config.json.$1> does not exist >"
+  fi
 }
 ```
 
@@ -415,6 +420,8 @@ I can now switch syncing and turn off syncing like so...
 $ sublremote cpu
 $ sublremote gpu
 $ sublremote off
+# open port 8888 for the ip-address of the current remote
+$ sublremote open
 ```
 
 ---------
