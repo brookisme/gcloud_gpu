@@ -3,6 +3,9 @@ TEST_RUN=FALSE
 NAME=$1
 COUNT=$2
 IMAGE_FAMILY=ubuntu-1604-lts
+# ACCELERATOR=nvidia-tesla-p100
+ACCELERATOR=nvidia-tesla-k80
+
 
 if [ -z $4 ]
 then
@@ -26,7 +29,7 @@ then
         ${SNAPSHOT_DISK_NAME}
         ${BOOT_DISK_SIZE}
         --machine-type n1-standard-8
-        --accelerator type=nvidia-tesla-k80,count=${COUNT}
+        --accelerator type=${ACCELERATOR},count=${COUNT}
         --image-family ${IMAGE_FAMILY} --image-project ubuntu-os-cloud
         --maintenance-policy TERMINATE --restart-on-failure"
 else
