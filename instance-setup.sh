@@ -69,7 +69,7 @@ lsports(){ sudo lsof -n -i | grep \$1 | grep LISTEN ; }
 #
 alias gpo='git push origin'
 alias gs='git status'
-alias gc='git commit -am'
+alias gc='git commit'
 
 #
 # ML DIRS
