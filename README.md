@@ -118,7 +118,7 @@ device = cpu
 ##### copy files to instance
 
 ```bash
-gcloud compute scp gpu-setup.sh <INSTANCE_NAME>:~/
+gcloud compute scp instance-setup.sh <INSTANCE_NAME>:~/
 ```
 
 
@@ -130,16 +130,16 @@ You can choose to install with TensorFlow or, if you are going to [install from 
 
 ```bash
 # GPU (with TF)
-. gpu-setup.sh
+. instance-setup.sh
 
 # GPU (without TF)
-. gpu-setup.sh gpu skip-tf
+. instance-setup.sh gpu skip-tf
 
 # CPU (with TF)
-. gpu-setup.sh cpu
+. instance-setup.sh cpu
 
 # CPU (without TF)
-. gpu-setup.sh cpu skip-tf
+. instance-setup.sh cpu skip-tf
 ```
 
 
@@ -215,7 +215,7 @@ vi ~/.jupyter/jupyter_notebook_config.py
 # full cmd
 jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser &
 
-# alias in bashrc from gpu-setup.sh
+# alias in bashrc from instance-setup.sh
 jnb
 ```
 
@@ -246,7 +246,7 @@ conda install -y -c conda-forge geopandas
 
 ###### GIT PRETTY PROMPT
 
-I couldn't get this work in the gpu-setup so you'll have to add it to your .bashrc yourself
+I couldn't get this work in the instance-setup so you'll have to add it to your .bashrc yourself
 
 - colorizes prompt
 - adds branch name if git repo

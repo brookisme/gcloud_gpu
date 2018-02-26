@@ -208,8 +208,21 @@ sudo apt-get install -y p7zip-full
 pip install kaggle-cli
 conda install -y libgcc
 pip install bcolz
-
 pip install gitnb
+
+
+### GEO-TOOLS
+
+if [ "$3" != "skip-geo" ]; then
+    echo "Installing GEO-TOOLS:"
+    conda install -y shapely
+    conda install -y cartopy
+    conda install -y fiona
+    conda install -y rasterio
+    conda install -y -c conda-forge geopandas
+else
+    echo "GEO-TOOLS not installed"
+fi
 
 ### REINSTALL NUMPY <sk-image error>
 # - Intel MKL FATAL ERROR: Cannot load libmkl_avx2.so or libmkl_def.so.
