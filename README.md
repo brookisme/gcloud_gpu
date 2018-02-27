@@ -21,7 +21,7 @@
 . instance-setup.sh
 ```
 
-##### Slightly more detail
+##### SLIGHTLY MORE DETAIL
 
 LOCAL COMPUTER:
 
