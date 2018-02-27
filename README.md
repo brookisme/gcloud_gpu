@@ -148,11 +148,11 @@ You can choose to install with TensorFlow or, if you are going to [install from 
 
 <a name="almost">
 
-##### THE REST:
+### THE REST
 
 There are still a small handful of steps (most of which are optional).
 
-Required:
+##### REQUIRED:
 
 - [GPU Setup](https://github.com/brookisme/gcloud_gpu/wiki/GPU-Setup)
 - [IP Config](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#ip)
