@@ -157,9 +157,9 @@ Required:
 - [GPU Setup](https://github.com/brookisme/gcloud_gpu/wiki/GPU-Setup)
 - [IP Config](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#ip)
 
-[Optional](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup):
+##### OPTIONAL
 
-REMOTE INSTANCE:
+[REMOTE INSTANCE](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup):
 
 - [TMUX](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#tmux)
 - [Pretty Prompt](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#prompt)
