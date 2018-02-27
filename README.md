@@ -170,7 +170,7 @@ There are still a small handful of steps (most of which are optional).
 - [GCloud Aliases](https://github.com/brookisme/gcloud_gpu/wiki/Local-Setup#gcloud_alias)
 - [Sublime-SFTP and Sublime-Remote](https://github.com/brookisme/gcloud_gpu/wiki/Local-Setup#subl_sftp)
 
-Also consider [installing TensorFlow from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes).
+Also consider installing [TensorFlow from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes).
 
 
 
