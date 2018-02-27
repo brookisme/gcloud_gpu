@@ -159,9 +159,16 @@ Required:
 
 [Optional](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup):
 
+REMOTE INSTANCE:
+
 - [TMUX](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#tmux)
 - [Pretty Prompt](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#prompt)
 - [Jupyter-PWD](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#jupyter)
+
+[LOCAL COMPUTER](https://github.com/brookisme/gcloud_gpu/wiki/Local-Setup): 
+
+- [GCloud Aliases](https://github.com/brookisme/gcloud_gpu/wiki/Local-Setup#gcloud_alias)
+- [Sublime-SFTP and Sublime-Remote](https://github.com/brookisme/gcloud_gpu/wiki/Local-Setup#subl_sftp)
 
 Also consider [installing TensorFlow from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes).
 
