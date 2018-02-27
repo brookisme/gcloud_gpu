@@ -11,7 +11,19 @@
 
 ### TLDR;
 
-##### LOCAL COMPUTER:
+##### TLDR; TLDR;
+
+```bash
+# from local computer
+. create_instance.sh gpu-84 4 500
+
+# from remote instance
+. instance-setup.sh
+```
+
+##### Slightly more detail
+
+LOCAL COMPUTER:
 
 ```bash
 # example: create instance named gpu-84 with 4 GPUs 500GB of memory 
@@ -32,13 +44,13 @@ gcloud compute ssh gpu-84
 gssh gpu-84
 ```
 
-##### REMOTE INSTANCE:
+REMOTE INSTANCE:
 
 ```bash
 # example: run setup script installing TensorFlow from pip
 . instance-setup.sh
 
-# example: run setup script installing TensorFlow later from sources (https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources)
+# --OR-- example: run setup script installing TensorFlow later from sources (https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources)
 . instance-setup.sh gpu skip-tf
 ```
 
@@ -57,7 +69,7 @@ USAGE:
 . create_instance.sh \
     <NAME> \
     <COUNT> \
-    [DISK_SIZE: 20] \
+    [DISK_SIZE: 200] \
     [SNAPSHOT_NAME: No snapshot]
 ```
 
@@ -112,7 +124,7 @@ gcloud compute scp instance-setup.sh <INSTANCE_NAME>:~/
 
 **NOTE:** The Anaconda install is interactive. The default for add anaconda to PATH is no -- **type yes!!!**
 
-You can choose to install with TensorFlow or, if you are going to [install from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes), skip the tensorflow installs. You also have the option of skipping the "geo tool" listed [here](https://github.com/brookisme/gcloud_gpu/wiki/Install-List#py3)
+You can choose to install with TensorFlow or, if you are going to [install from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes), skip the tensorflow installs. You also have the option of skipping the "geo tools" listed [here](https://github.com/brookisme/gcloud_gpu/wiki/Install-List#py3).
 
 ```bash
 # CPU (with TF)
