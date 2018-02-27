@@ -171,7 +171,7 @@ Required:
 - [Pretty Prompt](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#prompt)
 - [Jupyter-PWD](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#jupyter)
 
-Also consider[installing TensorFlow from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes).
+Also consider [installing TensorFlow from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes).
 
 
 
