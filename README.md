@@ -7,7 +7,7 @@
 
 ---
 
-<a name="tldr">
+<a name="tldr"></a>
 
 ### TLDR;
 
@@ -57,7 +57,7 @@ REMOTE INSTANCE:
 
 ---
 
-<a name="create">
+<a name="create"></a>
 
 ### CREATE INSTANCE
 
@@ -106,11 +106,11 @@ gcloud compute disks create DISK_NAME --source-snapshot SNAPSHOT_NAME
 
 ---
 
-<a name="setup">
+<a name="setup"></a>
 
 ### INSTANCE SETUP
 
-Use the script [instance-setup.sh](https://github.com/brookisme/gcloud_gpu/blob/master/instance-setup.sh) to setup new instances.
+Use the script [instance-setup.sh](https://github.com/brookisme/gcloud_gpu/blob/master/instance-setup.sh) to setup new instances. You can find a list of what is being installed [here](https://github.com/brookisme/gcloud_gpu/wiki/Install-List).
 
 
 ##### Copy setup script to instance
@@ -146,7 +146,7 @@ You can choose to install with TensorFlow or, if you are going to [install from 
 
 ---
 
-<a name="almost">
+<a name="almost"></a>
 
 ### THE REST
 
