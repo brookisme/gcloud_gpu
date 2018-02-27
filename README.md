@@ -150,15 +150,7 @@ You can choose to install with TensorFlow or, if you are going to [install from 
 
 ### THE REST
 
-These two lines do most of the work, 
-```bash
-# from local computer
-. create_instance.sh gpu-84 4 500
-
-# from remote instance
-. instance-setup.sh
-```
-however there are still handful of steps (most of which are optional).
+There are still a small handful of steps (most of which are optional).
 
 Required:
 
