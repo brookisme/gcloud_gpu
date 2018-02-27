@@ -79,7 +79,7 @@ VARS:
 - COUNT: (required) GPUs -1,2,4 | CPUs 0
 - DISK_SIZE: 
     - defaluts to 200 (GB) 
-    - consider of decreasing consider [adding a persistent disk](#pdisk)
+    - consider decreasing disk-size and [adding a persistent disk](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#pdisk)
     
 - SNAPSHOT_NAME (_see note below_): 
     - must first create snapshot (see above note)
