@@ -1,19 +1,53 @@
 ## GCLOUD GPU 
 
-_The number of virtual CPUs and the storage have little effect on cost. However prices increase dramatically with GPUs_
+1. [TLDR; Run two lines of code and you're done (almost)](#tldr)
+2. [Create Instance Script](#create)
+3. [Instance Setup Script](#setup)
+4. [Almost: The rest of the setup](#almost)
 
-- n1-standard-8: 8 virtual CPUs and 30 GB of memory.
-- boot-disk-size: 200GB
-- count (# of GPUs):
-	- 0 [CPU]: ~ $0.28 / hour
-	- 1: ~ $0.98 / hour
-	- 2: ~ $1.68 / hour
-	- 4: ~ $3.08 / hour
+---
+
+<a name="tldr">
+
+### TLDR;
+
+##### LOCAL COMPUTER:
+
+```bash
+# example: create instance named gpu-84 with 4 GPUs 500GB of memory 
+. create_instance.sh gpu-84 4 500
+```
 
 
----------
-&nbsp;
-## CREATE INSTANCE
+```bash
+# example: copy setup script to remote instance named gpu-84
+gcloud compute scp instance-setup.sh gpu-84:~/
+```
+
+```bash
+# example: ssh into instance named gpu-84
+gcloud compute ssh gpu-84
+
+# --OR-- using alias (https://github.com/brookisme/gcloud_gpu/wiki/Local-Setup#gcloud_alias)
+gssh gpu-84
+```
+
+##### REMOTE INSTANCE:
+
+```bash
+# example: run setup script installing TensorFlow from pip
+. instance-setup.sh
+
+# example: run setup script installing TensorFlow later from sources (https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources)
+. instance-setup.sh gpu skip-tf
+```
+
+
+---
+
+<a name="create">
+
+### CREATE INSTANCE
 
 Use the script [create_instance.sh](https://github.com/brookisme/gcloud_gpu/blob/master/create_instance.sh) to create new instances.
 
@@ -32,8 +66,8 @@ VARS:
 - NAME: (required) name of instance
 - COUNT: (required) GPUs -1,2,4 | CPUs 0
 - DISK_SIZE: 
-    - defaluts to 20 (GB)
-    - instead of increasing consider [adding a persistent disk](#pdisk)
+    - defaluts to 200 (GB) 
+    - consider of decreasing consider [adding a persistent disk](#pdisk)
     
 - SNAPSHOT_NAME (_see note below_): 
     - must first create snapshot (see above note)
@@ -57,422 +91,78 @@ EXAMPLES:
 gcloud compute disks create DISK_NAME --source-snapshot SNAPSHOT_NAME
 ```
 
-<a name='pdisk'></a>
-###### ADD PERSISTENT DISK
-https://cloud.google.com/compute/docs/disks/add-persistent-disk
 
-```bash
-# create/attach disk
-gcloud compute disks create <DISK_NAME> --size 200 --type pd-standard
-gcloud compute instances attach-disk <INSTANCE_NAME> --disk <DISK_NAME>
+---
 
-#
-# format/mount disk (ssh to instance)
-#
+<a name="setup">
 
-# get DISK_ID (~sdb)
-sudo lsblk 
+### INSTANCE SETUP
 
-# format disk
-sudo mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/<DISK_ID>
-
-# mount disk at "/data"
-sudo mkdir /data
-sudo mount -o discard,defaults /dev/<DISK_ID> /data
-```
+Use the script [instance-setup.sh](https://github.com/brookisme/gcloud_gpu/blob/master/instance-setup.sh) to setup new instances.
 
 
-###### CPU (from gpu snapshot) 
-
-If you are creating a CPU from a GPU snapshot you'll need to remove the GPU dependencies.
-
-```bash
-# remove cuda
-rm -rf ~/cuda
-rm -rf NVIDIA_CUDA-8.0_Samples
-sudo rm -rf /usr/local/cuda
-conda uninstall cuda80
-
-# tensorflow
-TF=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.1.0-cp36-cp36m-linux_x86_64.whl
-pip install --ignore-installed --upgrade $TF
-
-# theano: 
-# - update .theanorc
-# -- update [global]
-device = cpu
-# --remove [cuda]
-
-# .bashrc -- remove from PATH
-# export CUDA_HOME=/usr/local/cuda-8.0 
-# export LD_LIBRARY_PATH=$CUDA_HOME/lib64
-# PATH=$CUDA_HOME/bin:$PATH 
-# export PATH
-```
-
-
----------
-&nbsp;
-## SETUP SCRIPT
-
-##### copy files to instance
+##### Copy setup script to instance
 
 ```bash
 gcloud compute scp instance-setup.sh <INSTANCE_NAME>:~/
 ```
 
 
-##### SET UP SCRIPT
+##### Run setup script
 
 **NOTE:** The Anaconda install is interactive. The default for add anaconda to PATH is no -- **type yes!!!**
 
-You can choose to install with TensorFlow or, if you are going to [install from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes), skip the tensorflow installs
+You can choose to install with TensorFlow or, if you are going to [install from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes), skip the tensorflow installs. You also have the option of skipping the "geo tool" listed [here](https://github.com/brookisme/gcloud_gpu/wiki/Install-List#py3)
 
 ```bash
+# CPU (with TF)
+. instance-setup.sh cpu
+
 # GPU (with TF)
 . instance-setup.sh
 
 # GPU (without TF)
 . instance-setup.sh gpu skip-tf
 
-# CPU (with TF)
-. instance-setup.sh cpu
+# GPU (without TF or GEO-tools)
+. instance-setup.sh gpu skip-tf skip-geo
 
-# CPU (without TF)
-. instance-setup.sh cpu skip-tf
+# GPU (including TF but without GEO-tools)
+. instance-setup.sh gpu tf skip-geo
 ```
 
 
----------
-&nbsp;
-## INSTANCE SETUP 
+---
 
-###### CUDNN
+<a name="almost">
 
-First check that CUDA is installed correctly:
-```
-nvidia-smi
-```
+### THE REST
 
-After signing up you can download cudnn from here [https://developer.nvidia.com/rdp/cudnn-download](https://developer.nvidia.com/rdp/cudnn-download). I've saved a version to cloud-storage, which makes copying to a compute instance lightning fast.
-
-
+These two lines do most of the work, 
 ```bash
-# download cudnn v7
-wget https://storage.googleapis.com/bgw-public/cudnn/9.1/cudnn-9.1-linux-x64-v7.tgz
+# from local computer
+. create_instance.sh gpu-84 4 500
 
-# unpack
-tar zxvf cudnn-9.1-linux-x64-v7.tgz 
-
-# move cuda to usr/local
-# QUESTION: SHOULD I REALLY PUT THESE IN 9.1?
-sudo mv cuda/lib64/* /usr/local/cuda-9.1/lib64/
-sudo mv cuda/include/* /usr/local/cuda-9.1/include/
-
-# install samples
-cuda-install-samples-9.1.sh  ~ 
-
-# check cuda install
-pushd NVIDIA_CUDA-9.1_Samples/1_Utilities/deviceQuery
-make
-./deviceQuery 
-popd
+# from remote instance
+. instance-setup.sh
 ```
+however there are still handful of steps (most of which are optional).
 
-###### EXTRENAL IP
+Required:
 
-- reserve a static ip [GCloud-Console > Networking > External IP](https://console.cloud.google.com/networking/addresses/list
-)
-- add a firewall rule [GCloud-Console > Networking > Firewall Rules](https://console.cloud.google.com/networking/firewalls/list
-): 
-	- (source ip-ranges) 0.0.0.0/0
-	- (protocols and ports) tcp:8800-8900
-  - add target ~ "jupyter" 
-- add target to compute engine instance [GCloud-Console > Compute Engine](https://console.cloud.google.com/compute/instances) > edit
+- [GPU Setup](https://github.com/brookisme/gcloud_gpu/wiki/GPU-Setup)
+- [IP Config](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#ip)
 
+[Optional](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup):
 
-###### OTHER POSSIBLE CHANGES:
+- [TMUX](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#tmux)
+- [Pretty Prompt](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#prompt)
+- [Jupyter-PWD](https://github.com/brookisme/gcloud_gpu/wiki/Instance-Setup#jupyter)
 
-- do not delete disk when deleted
-
-###### JUPYTER 
-
-```python
-# set password  *** copy sha output ***
-from notebook.auth import passwd
-passwd()
-```
-
-```
-jupyter notebook --generate-config
-
-vi ~/.jupyter/jupyter_notebook_config.py 
-# uncomment/update line
-# c.NotebookApp.password = 'sha1...'
-```
-
-```
-# full cmd
-jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser &
-
-# alias in bashrc from instance-setup.sh
-jnb
-```
-
-###### GIT (password only every 12 hours)
-
-```
-git config --global credential.helper 'cache --timeout=43200'
-```
+Also consider[installing TensorFlow from sources](https://github.com/brookisme/gcloud_gpu/wiki/TensorFlow:-Install-from-Sources-Notes).
 
 
-###### GEOTOOLS
-```
-# descarteslabs (i had to use sudo -- note this is bad practice)
-pip install descarteslabs
-# - or latest dev version
-pip install -U git+https://github.com/descarteslabs/descarteslabs-python.git
-# authorize
-descarteslabs auth login
-
-# other
-conda install -y shapely
-conda install -y cartopy
-conda install -y fiona
-conda install -y rasterio
-conda install -y -c conda-forge geopandas
-```
 
 
-###### GIT PRETTY PROMPT
-
-I couldn't get this work in the instance-setup so you'll have to add it to your .bashrc yourself
-
-- colorizes prompt
-- adds branch name if git repo
-- colorizes branch name
-    + green if clean branch
-    + red if edits exist
-
-```bash
-# based on http://vvv.tobiassjosten.net/bash/dynamic-prompt-with-git-and-ansi-colors/
-# - conda env added
-# - colors changed
-
-# Configure colors, if available.
-if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-  c_reset='\[\e[0m\]'
-  c_user='\[\e[1;36m\]'
-  c_path='\[\e[0;33m\]'
-  c_git_clean='\[\e[1;32m\]'
-  c_git_dirty='\[\e[0;31m\]'
-else
-  c_reset=
-  c_user=
-  c_git_cleancleann_path=
-  c_git_clean=
-  c_git_dirty=
-fi
-
-# Function to assemble the Git parsingart of our prompt.
-git_prompt ()
-{ 
-  if ! git rev-parse --git-dir > /dev/null 2>&1; then
-    return 0
-  fi
-  
-  git_branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
-  
-  if git diff --quiet 2>/dev/null >&2; then
-    git_color="$c_git_clean"
-  else
-    git_color="$c_git_dirty"
-  fi
-  
-  echo "[$git_color$git_branch${c_reset}]"
-}
-
-
-# Function to get conda env.
-conda_env ()
-{ 
-    regex='$\(([^)]+)\)'
-    [[ $PS1 =~ $regex ]]
-    echo "$BASH_REMATCH"
-}
-
-# Thy holy prompt.
-PROMPT_COMMAND='PS1="$(conda_env)${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}$(git_prompt)\$ "'
-```
-
-
-###### [TMUX-SETUP](https://github.com/brookisme/tmux-setup)
-
-This setup:
-
-- changes the control key from `C-b` to `C-a`
-- uses `|` and `-` to split screens
-- installs a print package for logging
-- a couple other things
-
-```
-pushd ~/
-rm -rf .tmux*
-git clone https://github.com/brookisme/tmux-setup.git
-mv tmux-setup/tmux.conf .tmux.conf
-rm -rf tmux-setup/
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-popd
-```
-
-###### PY3 CHECKS
-
-```bash
-python --version
-python -c "from osgeo import gdal; print(gdal.__version__)"
-# check TF install
-python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))"
-```
-
-###### PY2 CHECKS
-```
-sa py2
-python --version
-python -c "import keras; print(keras.__version__)"
-python -c "import tensorflow as tf;print(tf.Session().run(tf.constant('Hi TF')))"
-```
-
-###### SUBLIME
-*NOTE: If you don't reserve a static-ip you are going to have to update the ip-address each time.  With new ip's first log in through gcloud cli to accept private key.*
-
-```json
-// example sftp-config.json
-// pro-tip: 
-//    if you are using on multiple instances put the name 
-//    of the instance in a comment and use the sublremote cmd
-{
-    "type": "sftp",
-    "sync_down_on_open": false,
-    "upload_on_save":true,
-    "host": "<INSTANCE-IP-ADDRESS>",
-    "remote_path": "<PATH-TO-SYNCED-REMOTE-DIR>",
-    "user": "brook",
-    "port":22,
-    "ignore_regexes":[
-        "/data/",
-        "/.kaggle-cli/",
-        "\\.sublime-(project|workspace)", 
-        "sftp-config(-alt\\d?)?\\.json", 
-        "sftp-settings\\.json", "/venv/", 
-        "\\.svn", 
-        "\\.hg", 
-        "\\.git/", 
-        "\\.bzr", 
-        "_darcs", 
-        "CVS", 
-        "\\.DS_Store", 
-        "Thumbs\\.db", 
-        "desktop\\.ini"],
-    "connect_timeout": 30,
-    "ssh_key_file": "~/.ssh/google_compute_engine"
-}
-```
-
-I often use multiple machines. A cpu for dev and gpu for training.  In that case i'll create multiple configs, for instance
-```
-cpu.sftp-config.json
-gpu.sftp-config.json
-```
-
-And add this cmd to my bash profile
-
-```bash
-function sublremote {
-  if [[ "$1" = "off"  ]]
-    then
-        echo "SUBL-REMOTE: OFF"
-        if [[ -f sftp-config.json  ]]
-        then
-         mv sftp-config.json sftp-config.json.bak
-        fi
-    elif [[ "$1" = "open" ]]; then
-        ip=$( cat sftp-config.json | grep host | xargs sh -c 'echo ${1%,}' )
-        url="http://"$ip":8888"
-        echo "SUBL-REMOTE: OPENING URL ( "$url" )"
-        python -m webbrowser -t $url
-  elif [[  -f $1.sftp-config.json ]]
-    then
-        if [[ -f sftp-config.json  ]]
-        then
-           mv sftp-config.json sftp-config.json.bak
-        fi      
-        echo "SUBL-REMOTE: CONNECT < $1 >"
-      cp $1.sftp-config.json sftp-config.json
-  else
-      echo "SUBL-REMOTE: ERROR < config <sftp-config.json.$1> does not exist >"
-  fi
-}
-```
-
-I can now switch syncing and turn off syncing like so...
-
-```bash
-$ sublremote cpu
-$ sublremote gpu
-$ sublremote off
-# open port 8888 for the ip-address of the current remote
-$ sublremote open
-```
-
----------
-&nbsp;
-## THE SETUP: ALIASES, DIRECTORIES, PROMPTS 
-
-In addition to setting up CUDNN and installing packages the script added a handful of commands, alaises and other things which I'll mention here.
-
-##### DATA/WEIGHTS
-
-There are directories in the root directory DATA and WEIGHTS which in which I claim all data and weights should go.
-
-- its not in a project directory because you might want to use the same set of data/weights in more than one project, or have different version of projects and you certainly don't want to be copying or moving data around
-- its in root, instead of user root, in case other users are also using this instance and logging into a different user root but want access to the same data and weights
-- its easy to access
-    + I've set up bash alaises `cddata` and `cdweights` so its easy to get there from the command line
-    + I've exported the environment vars `DATA` and `WEIGHTS` so that python scripts can access it `os.environ.get('DATA')`.
-
-##### ALAISES/ENV
-
-- `jnb` launches a python notebook
-- the python-2 environment is called py2 (`source activate py2`)
-- `source activate` is aliased by `sa`
-- `source deactivate` is aliased by `sd`
-- `kerastf`,`kerasth` switch the keras backend to tensorflow,theano respectively
-
-```bash
-# example: go to py2
-$ sa py2
-$ kerasth
-
-# return to default py3
-$ sd
-$ kerastf
-```
-
-### LOCAL GCLOUD ALAISES
-
-I like to add the following to my .bash(rc)(\_profile). 
-
-Note: `ggo` doesn't always work. The pause is in there because sometimes I get a 255 error, and I _think_ this is because the server isn't ready even though `gstart` has completed. Still playing with this.
-
-```bash
-#
-# GCLOUD
-#
-alias gconfig='gcloud config configurations activate'
-alias gssh='gcloud compute ssh'
-alias gstart='gcloud compute instances start'
-alias gstop='gcloud compute instances stop'
-ggo(){ echo 'gcloud start: '$1; gstart $1; echo '...pausing for server'; sleep 15; echo 'gcloud ssh: '$1;  gssh $1 ; }
-```
 
  

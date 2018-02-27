@@ -9,7 +9,7 @@ ACCELERATOR=nvidia-tesla-k80
 
 if [ -z $4 ]
 then
-    STORAGE=${3:-20}
+    STORAGE=${3:-200}
     SNAPSHOT='--'
     SNAPSHOT_DISK_NAME=''
     BOOT_DISK_SIZE='--boot-disk-size '$STORAGE'GB'
