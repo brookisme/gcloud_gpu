@@ -4,7 +4,7 @@
 #
 # DOWNLOAD VERSIONS
 #
-ANACONDA_VERSION=Anaconda3-5.0.1-Linux-x86_64.sh
+ANACONDA_VERSION=Anaconda3-5.1.0-Linux-x86_64.sh
 ANACONDA_DOWNLOAD_BASE=https://repo.continuum.io/archive
 
 cd ~/
