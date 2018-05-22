@@ -19,8 +19,8 @@ if [ "$1" = "cpu" ]; then
     TENSORFLOW_VERSION_PY2=tensorflow-1.4.0-cp27-none-linux_x86_64.whl
 else
     echo "GPU SETUP:"
-    CUDA_DOWNLOAD_BASE=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64
-    CUDA_VERSION=cuda-repo-ubuntu1604_9.1.85-1_amd64.deb
+    CUDA_DOWNLOAD_BASE=https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64
+    CUDA_VERSION=cuda-repo-ubuntu1604_9.2.88-1_amd64.deb
     TENSORFLOW_BASE=https://storage.googleapis.com/tensorflow/linux/gpu
     TENSORFLOW_VERSION=tensorflow_gpu-1.4.0-cp36-cp36m-linux_x86_64.whl
     TENSORFLOW_VERSION_PY2=tensorflow_gpu-1.4.0-cp27-none-linux_x86_64.whl
@@ -209,7 +209,7 @@ pip install kaggle-cli
 conda install -y libgcc
 pip install bcolz
 pip install gitnb
-
+conda install -y -c conda-forge retrying 
 
 ### GEO-TOOLS
 
@@ -220,7 +220,8 @@ if [ "$3" != "skip-geo" ]; then
     conda install -y fiona
     conda install -y rasterio
     conda install -y -c conda-forge geopandas
-else
+    conda install -y -c conda-forge descarteslabs
+else    
     echo "GEO-TOOLS not installed"
 fi
 
