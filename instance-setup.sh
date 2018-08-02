@@ -96,6 +96,16 @@ export PATH
 # gcloud
 alias gconfig='gcloud config configurations activate' 
 alias gssh='gcloud compute ssh' 
+gccp(){ 
+  TMP_CMD_PRE="gcloud compute scp --recurse "$1":"$(pwd)
+  if [[ "$3" ]]
+  then
+    TMP_CMD_PRE=$TMP_CMD_PRE"/"$3
+  fi
+  TMP_CMD=$TMP_CMD_PRE" "$2 ;
+  echo "GCLOUD CMD: "$TMP_CMD ; 
+  ${TMP_CMD} ; 
+}
 
 # files
 alias sampletree='mkdir -p sample/{train,test,valid}'
